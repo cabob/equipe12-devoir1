@@ -24,14 +24,13 @@ public class Clinic {
         Patient newPatient = new Patient(name, gravity, visibleSymptom);
 
         if(doctorTriageType == TriageType.FIFO) {
+                doctorPatients.addLast(newPatient);
+        } else if(doctorTriageType == TriageType.GRAVITY) {
             if(gravity > 5){
                 doctorPatients.addFirst(newPatient);
-            }
-            else{
+            }else{
                 doctorPatients.addLast(newPatient);
             }
-        } else if(doctorTriageType == TriageType.GRAVITY) {
-            addPatientInDoctorListByGravity(newPatient, gravity);
         }
 
         if(visibleSymptom == VisibleSymptom.BROKEN_BONE || visibleSymptom == VisibleSymptom.SPRAIN){
@@ -47,26 +46,5 @@ public class Clinic {
 
     public LinkedList<Patient> GetRadiologyPatients() {
         return radiologyPatients;
-    }
-
-    private void addPatientInDoctorListByGravity(Patient patient, int gravity) {
-
-        if (doctorPatients.isEmpty()) {
-            doctorPatients.add(patient);
-            return;
-        }
-
-        ListIterator<Patient> iterator = doctorPatients.listIterator();
-        while (iterator.hasNext()) {
-            Patient current = iterator.next();
-
-            if (current.getGravity() < gravity) {
-                iterator.previous();
-                iterator.add(patient);
-                return;
-            }
-        }
-
-        doctorPatients.addLast(patient);
     }
 }
