@@ -1,9 +1,9 @@
 package devoir.domaine;
+
 import devoir.enums.TriageType;
 import devoir.enums.VisibleSymptom;
 
 import java.util.LinkedList;
-import java.util.ListIterator;
 
 public class Clinic {
 
@@ -23,28 +23,30 @@ public class Clinic {
     public void triagePatient(String name, int gravity, VisibleSymptom visibleSymptom) {
         Patient newPatient = new Patient(name, gravity, visibleSymptom);
 
-        if(doctorTriageType == TriageType.FIFO) {
-                doctorPatients.addLast(newPatient);
-        } else if(doctorTriageType == TriageType.GRAVITY) {
-            if(gravity > 5){
-                doctorPatients.addFirst(newPatient);
-            }else{
-                doctorPatients.addLast(newPatient);
-            }
-        }
+        triage(newPatient, doctorPatients, doctorTriageType);
 
-        if(visibleSymptom == VisibleSymptom.BROKEN_BONE || visibleSymptom == VisibleSymptom.SPRAIN){
-            if(radiologyTriageType == TriageType.FIFO) {
-                radiologyPatients.addLast(newPatient);
+        if (visibleSymptom == VisibleSymptom.BROKEN_BONE || visibleSymptom == VisibleSymptom.SPRAIN) {
+            triage(newPatient, radiologyPatients, radiologyTriageType);
+        }
+    }
+
+    private void triage(Patient patient, LinkedList<Patient> patientsList, TriageType triageType) {
+        if (triageType == TriageType.FIFO) {
+            patientsList.addLast(patient);
+        } else if (triageType == TriageType.GRAVITY) {
+            if (patient.getGravity() > 5) {
+                patientsList.addFirst(patient);
+            } else {
+                patientsList.addLast(patient);
             }
         }
     }
 
-    public LinkedList<Patient> GetDoctorPatients() {
+    public LinkedList<Patient> getDoctorPatients() {
         return doctorPatients;
     }
 
-    public LinkedList<Patient> GetRadiologyPatients() {
+    public LinkedList<Patient> getRadiologyPatients() {
         return radiologyPatients;
     }
 }

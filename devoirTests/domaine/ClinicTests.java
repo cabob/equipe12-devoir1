@@ -26,8 +26,8 @@ public class ClinicTests {
         Patient newPatient = new Patient("John Doe", 6, VisibleSymptom.MIGRAINE);
         clinic.triagePatient(newPatient.getName(), newPatient.getGravity(), newPatient.getSymptom());
 
-        LinkedList<Patient> doctorPatients = clinic.GetDoctorPatients();
-        LinkedList<Patient> radiologyPatients = clinic.GetRadiologyPatients();
+        LinkedList<Patient> doctorPatients = clinic.getDoctorPatients();
+        LinkedList<Patient> radiologyPatients = clinic.getRadiologyPatients();
 
         assertEquals(1, doctorPatients.size());
         assertEquals(newPatient.getName(), doctorPatients.get(0).getName());
@@ -45,8 +45,8 @@ public class ClinicTests {
         clinic.triagePatient(firstPatient.getName(), firstPatient.getGravity(), firstPatient.getSymptom());
         clinic.triagePatient(secondPatient.getName(), secondPatient.getGravity(), secondPatient.getSymptom());
 
-        LinkedList<Patient> doctorPatients = clinic.GetDoctorPatients();
-        LinkedList<Patient> radiologyPatients = clinic.GetRadiologyPatients();
+        LinkedList<Patient> doctorPatients = clinic.getDoctorPatients();
+        LinkedList<Patient> radiologyPatients = clinic.getRadiologyPatients();
 
         assertEquals(2, doctorPatients.size());
         assertEquals(secondPatient.getName(), doctorPatients.get(1).getName());
@@ -61,8 +61,8 @@ public class ClinicTests {
         Patient newPatient = new Patient("John Doe", 6, VisibleSymptom.SPRAIN);
         clinic.triagePatient(newPatient.getName(), newPatient.getGravity(), newPatient.getSymptom());
 
-        LinkedList<Patient> doctorPatients = clinic.GetDoctorPatients();
-        LinkedList<Patient> radiologyPatients = clinic.GetRadiologyPatients();
+        LinkedList<Patient> doctorPatients = clinic.getDoctorPatients();
+        LinkedList<Patient> radiologyPatients = clinic.getRadiologyPatients();
 
         assertEquals(1, doctorPatients.size());
         assertEquals(newPatient.getName(), doctorPatients.get(0).getName());
@@ -83,8 +83,8 @@ public class ClinicTests {
         clinic.triagePatient(firstPatient.getName(), firstPatient.getGravity(), firstPatient.getSymptom());
         clinic.triagePatient(secondPatient.getName(), secondPatient.getGravity(), secondPatient.getSymptom());
 
-        LinkedList<Patient> doctorPatients = clinic.GetDoctorPatients();
-        LinkedList<Patient> radiologyPatients = clinic.GetRadiologyPatients();
+        LinkedList<Patient> doctorPatients = clinic.getDoctorPatients();
+        LinkedList<Patient> radiologyPatients = clinic.getRadiologyPatients();
 
         assertEquals(2, doctorPatients.size());
         assertEquals(secondPatient.getName(), doctorPatients.get(0).getName());
@@ -102,8 +102,8 @@ public class ClinicTests {
         clinic.triagePatient(firstPatient.getName(), firstPatient.getGravity(), firstPatient.getSymptom());
         clinic.triagePatient(secondPatient.getName(), secondPatient.getGravity(), secondPatient.getSymptom());
 
-        LinkedList<Patient> doctorPatients = clinic.GetDoctorPatients();
-        LinkedList<Patient> radiologyPatients = clinic.GetRadiologyPatients();
+        LinkedList<Patient> doctorPatients = clinic.getDoctorPatients();
+        LinkedList<Patient> radiologyPatients = clinic.getRadiologyPatients();
 
         assertEquals(2, doctorPatients.size());
         assertEquals(secondPatient.getName(), doctorPatients.get(0).getName());
@@ -113,5 +113,27 @@ public class ClinicTests {
         assertEquals(secondPatient.getName(), radiologyPatients.get(1).getName());
         assertEquals(secondPatient.getGravity(), radiologyPatients.get(1).getGravity());
         assertEquals(secondPatient.getSymptom(), radiologyPatients.get(1).getSymptom());
+    }
+
+    @Test
+    public void givenASecondPatientWithHigherGravity_WhenDoctorTriageTypeIsGravityAndRadiologyTriageTypeIsGravity_thenFirstInDoctorListAndFirstInRadiologyList() {
+        clinic = new Clinic(TriageType.GRAVITY, TriageType.GRAVITY);
+        Patient firstPatient = new Patient("John Doe", 4, VisibleSymptom.BROKEN_BONE);
+        Patient secondPatient = new Patient("Albert Doe", 7, VisibleSymptom.BROKEN_BONE);
+
+        clinic.triagePatient(firstPatient.getName(), firstPatient.getGravity(), firstPatient.getSymptom());
+        clinic.triagePatient(secondPatient.getName(), secondPatient.getGravity(), secondPatient.getSymptom());
+
+        LinkedList<Patient> doctorPatients = clinic.getDoctorPatients();
+        LinkedList<Patient> radiologyPatients = clinic.getRadiologyPatients();
+
+        assertEquals(2, doctorPatients.size());
+        assertEquals(secondPatient.getName(), doctorPatients.get(0).getName());
+        assertEquals(secondPatient.getGravity(), doctorPatients.get(0).getGravity());
+        assertEquals(secondPatient.getSymptom(), doctorPatients.get(0).getSymptom());
+        assertEquals(2, radiologyPatients.size());
+        assertEquals(secondPatient.getName(), radiologyPatients.get(0).getName());
+        assertEquals(secondPatient.getGravity(), radiologyPatients.get(0).getGravity());
+        assertEquals(secondPatient.getSymptom(), radiologyPatients.get(0).getSymptom());
     }
 }

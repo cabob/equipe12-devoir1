@@ -12,7 +12,7 @@ public class Main {
         Clinic clinic = new Clinic(doctorTriageType, radiologyTriageType);
         clinic.triagePatient("John", 4, VisibleSymptom.MIGRAINE);
 
-        System.out.println(clinic.GetRadiologyPatients());
-        System.out.println(clinic.GetDoctorPatients());
+        System.out.println(clinic.getRadiologyPatients());
+        System.out.println(clinic.getDoctorPatients());
     }
 }
