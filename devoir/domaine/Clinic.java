@@ -1,11 +1,12 @@
 package devoir.domaine;
 
+import devoir.domaine.interfaces.TriageCenter;
 import devoir.enums.TriageType;
 import devoir.enums.VisibleSymptom;
 
 import java.util.LinkedList;
 
-public class Clinic {
+public class Clinic implements TriageCenter {
 
     private final TriageType doctorTriageType;
     private final TriageType radiologyTriageType;
@@ -20,6 +21,7 @@ public class Clinic {
         radiologyPatients = new LinkedList<>();
     }
 
+    @Override
     public void triagePatient(String name, int gravity, VisibleSymptom visibleSymptom) {
         Patient newPatient = new Patient(name, gravity, visibleSymptom);
 
